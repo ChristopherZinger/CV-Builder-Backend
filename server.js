@@ -9,6 +9,7 @@ const { getUser } = require('./myUtils/auth/authUtils');
 const authRouters = require('./auth/routes/AuthRoutes')
 const userProfileRouters = require('./userprofile/routes/UserProfileRoutes')
 const experienceRouters = require('./experience/routes/ExperienceRoutes')
+const educationRouters = require('./education/routes/EducationRoutes')
 
 // set up env variables
 if (process.env.NODE_ENV !== 'production') {
@@ -45,3 +46,4 @@ app.use(getUser);
 app.use(authRouters);
 app.use(userProfileRouters);
 app.use(experienceRouters);
+app.use(educationRouters);
