@@ -1,10 +1,10 @@
 const { Router } = require('express');
-const controllers = require('../controllers/EducationControllers');
+const controllers = require('../controllers/CVControllers');
 
 const router = Router();
 
-router.post('/save-cv', controllers.saveEducation);
-router.get('/get-cv-list', controllers.getEducation);
-router.get('/remove-cv', controllers.removeEducation);
+router.post('/save-cv', controllers.saveCV);
+router.get('/get-cv-list', controllers.getCV);
+router.get('/remove-cv', controllers.removeCV);
 
 module.exports = router;
