@@ -31,14 +31,10 @@ let UserProfile = new Schema({
             type: Number,
         },
     },
-    contact: {
-        phone: {
-            type: String,
-        },
-        links: [{
-            type: String,
-        }]
-    }
+    contact: [{
+        type: { type: String },
+        value: { type: String },
+    }]
 })
 
 const UserProfileModel = mongoose.model("UserProfile", UserProfile);

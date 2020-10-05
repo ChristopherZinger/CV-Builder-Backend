@@ -19,12 +19,20 @@ module.exports.saveProfile = async (req, res) => {
             await newUserProfile.save();
             res.status(201);
         } else {
-            // update model
-            const updatedProfile = await UserProfileModel.findOneAndUpdate(
-                { user: res.user._id },
-                req.body
-            )
-            await updatedProfile.save();
+            if (!req.body.contact) {
+                // update model
+                const updatedProfile = await UserProfileModel.findOneAndUpdate(
+                    { user: res.user._id },
+                    req.body
+                )
+                await updatedProfile.save();
+            } else {
+                // append new contact
+                const updatedProfile = await UserProfileModel.findOne({ user: res.user._id });
+                updatedProfile.contact.push(req.body.contact)
+                await updatedProfile.save();
+            }
+
             res.status(200);
         }
 
@@ -44,8 +52,6 @@ module.exports.saveProfile = async (req, res) => {
     }
 }
 
-
-
 module.exports.getProfile = async (req, res) => {
     // check for user
     if (!res.user) return res.sendStatus(401) // not authorized
@@ -59,14 +65,34 @@ module.exports.getProfile = async (req, res) => {
 
         // create data object to send back to client
         const { info, contact, address } = userProfile;
+
         const sendData = {
             info,
-            contact,
+            contact: [{ type: 'email', value: res.user.email }, ...contact],
             address
         }
 
         return res.json(sendData)
 
+    } catch (err) {
+        console.log(err)
+        return res.sendStatus(500)
+    }
+}
+
+
+module.exports.removeContact = async (req, res) => {
+    // check for user
+    if (!res.user) return res.sendStatus(401) // not authorized
+    const id = req.query.id;
+    try {
+        const userProfile = await UserProfileModel.findOneAndUpdate(
+            { user: res.user._id },
+            { $pull: { "contact": { _id: id } } })
+
+        await userProfile.save();
+        const newUserProfile = await UserProfileModel.findOne({ user: res.user._id })
+        res.status(200).json(newUserProfile)
     } catch (err) {
         console.log(err)
         return res.sendStatus(500)
