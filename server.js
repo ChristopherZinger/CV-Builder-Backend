@@ -6,10 +6,11 @@ const cookieParser = require('cookie-parser');
 const { getUser } = require('./myUtils/auth/authUtils');
 
 // routes
-const authRouters = require('./auth/routes/AuthRoutes')
-const userProfileRouters = require('./userprofile/routes/UserProfileRoutes')
-const experienceRouters = require('./experience/routes/ExperienceRoutes')
-const educationRouters = require('./education/routes/EducationRoutes')
+const authRouters = require('./auth/routes/AuthRoutes');
+const userProfileRouters = require('./userprofile/routes/UserProfileRoutes');
+const experienceRouters = require('./experience/routes/ExperienceRoutes');
+const educationRouters = require('./education/routes/EducationRoutes');
+const cvRouters = require('./cv/routes/CVRoutes');
 
 // set up env variables
 if (process.env.NODE_ENV !== 'production') {
@@ -47,3 +48,4 @@ app.use(authRouters);
 app.use(userProfileRouters);
 app.use(experienceRouters);
 app.use(educationRouters);
+app.use(cvRouters);
