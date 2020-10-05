@@ -25,7 +25,11 @@ let CV = new Schema({
     experience: [{
         type: Schema.Types.ObjectId,
         ref: "experience",
-    }]
+    }],
+    createdAt: {
+        type: Date,
+        default: Date.now
+    },
 })
 
 const CVModel = mongoose.model("CV", CV);
