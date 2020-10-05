@@ -6,7 +6,7 @@ module.exports.saveCV = async (req, res) => {
 }
 
 
-module.exports.getCV = async (req, res) => {
+module.exports.getCVList = async (req, res) => {
     // check for user
     if (!res.user) return res.sendStatus(401) // not authorized
 
